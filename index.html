@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRANDNOVA OS</title>
+<style>
+:root {
+  --bg:#080b14; --panel:#101729; --panel2:#151e32;
+  --line:#27334b; --text:#f4f7ff; --muted:#94a3bc;
+  --cyan:#58e6f3; --violet:#a68bff; --green:#70e6ba;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 75% 0%,#29204a55,transparent 35%),var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;flex-shrink:0;padding:23px 15px;background:#0a0f1df5;border-right:1px solid var(--line);display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:12px;padding:0 9px 27px}
+.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--violet));display:grid;place-items:center;color:#08101c;font-size:22px;font-weight:900;box-shadow:0 0 28px #58e6f326}
+.brand strong{font-size:15px;letter-spacing:1.4px}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;margin-top:4px}
+.section-label{font-size:10px;color:#65738d;letter-spacing:1.7px;padding:17px 12px 9px}
+.nav{display:grid;gap:5px}
+.nav button{background:transparent;border:1px solid transparent;color:#9baac2;text-align:left;padding:12px;border-radius:11px;display:flex;gap:12px;align-items:center;font-size:13px}
+.nav button:hover{background:#141e32;color:white}
+.nav button.active{background:linear-gradient(100deg,#123744,#25203e);border-color:#315064;color:white;box-shadow:inset 3px 0 var(--cyan)}
+.nav .ico{width:19px;text-align:center;font-size:16px}
+.probox{margin-top:auto;border:1px solid #554587;border-radius:15px;padding:15px;background:linear-gradient(145deg,#251e42,#111729)}
+.probox p{font-size:12px;color:#b7b4d6;line-height:1.6}
+.probox button{width:100%;padding:10px;border:0;border-radius:9px;background:linear-gradient(100deg,var(--cyan),var(--violet));font-weight:800;color:#08101c}
+.main{flex:1;min-width:0;padding:25px 30px 45px;max-width:1600px;margin:0 auto;width:100%}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:28px}
+.top-left{display:flex;align-items:center;gap:12px}
+.menu{display:none;background:var(--panel);border:1px solid var(--line);color:white;padding:9px 12px;border-radius:10px}
+.eyebrow{font-size:10px;color:var(--cyan);letter-spacing:2px;font-weight:800}
+h1{font-size:clamp(24px,3vw,34px);letter-spacing:-1px;margin:7px 0}
+.subtitle{color:var(--muted);font-size:13px}
+.top-actions{display:flex;gap:9px;align-items:center}
+.iconbtn,.secondary{border:1px solid var(--line);background:var(--panel);color:#dce5f6;border-radius:11px;padding:11px 13px}
+.avatar{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#263c58,#59447f);display:grid;place-items:center;font-weight:800}
+.hero{position:relative;overflow:hidden;border:1px solid #34445e;border-radius:23px;padding:29px;background:linear-gradient(110deg,#122b3b,#17192e 62%,#282047);margin-bottom:23px}
+.hero:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;right:-70px;top:-115px;background:radial-gradient(circle,#59e8f438,transparent 68%);pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:650px}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid #456172;background:#0d1c2c99;color:#b7f6fa;padding:7px 11px;border-radius:99px;font-size:10px;letter-spacing:1px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.hero h2{font-size:clamp(24px,3.3vw,39px);letter-spacing:-1.2px;line-height:1.14;margin:18px 0 10px}
+.hero h2 span{background:linear-gradient(90deg,var(--cyan),var(--violet));background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero p{font-size:13px;color:#aab8d0;line-height:1.8;max-width:500px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:21px}
+.primary{border:0;background:linear-gradient(110deg,var(--cyan),#9da7ff);color:#07111c;border-radius:11px;padding:12px 16px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:24px}
+.card{background:linear-gradient(145deg,#131c30,#0d1321);border:1px solid var(--line);border-radius:17px;padding:18px;min-width:0}
+.stat-top{display:flex;justify-content:space-between;gap:8px;align-items:center;color:var(--muted);font-size:12px}
+.stat-icon{width:34px;height:34px;border:1px solid #33425e;background:#18243a;border-radius:10px;display:grid;place-items:center;font-size:16px}
+.statvalue{font-size:clamp(22px,2.3vw,30px);font-weight:800;letter-spacing:-1px;margin:17px 0 7px}
+.change{font-size:11px;color:var(--green)}
+.muted{color:var(--muted);font-size:11px}
+.layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr);gap:18px}
+.cardhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px}
+.cardhead h3{margin:0;font-size:15px}
+.cardhead p{margin:6px 0 0;font-size:11px;color:var(--muted)}
+.badge{font-size:10px;color:#b6f7e2;background:#16362f;border:1px solid #285848;border-radius:7px;padding:6px 8px}
+.chart{height:210px;display:flex;align-items:flex-end;gap:13px;padding:20px 4px 0;border-bottom:1px solid var(--line);background:repeating-linear-gradient(to bottom,transparent 0,transparent 49px,#27334b55 50px)}
+.barcol{flex:1;height:100%;display:flex;align-items:center;justify-content:flex-end;flex-direction:column;gap:8px;min-width:0}
+.bar{width:min(34px,80%);min-height:4px;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,var(--cyan),#3e6aaf);box-shadow:0 0 18px #58e6f31c;transition:height .3s}
+.bar:nth-child(odd){background:linear-gradient(180deg,var(--violet),#5551a7)}
+.month{font-size:10px;color:var(--muted)}
+.quickgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.quick{border:1px solid #2a3852;background:linear-gradient(145deg,#141f33,#0d1422);padding:14px;border-radius:13px;text-align:left;color:white;min-height:105px;transition:.18s}
+.quick:hover{transform:translateY(-2px);border-color:#4e9aa7}
+.quick .qicon{font-size:20px;margin-bottom:12px}
+.quick strong{font-size:12px;display:block}
+.quick small{font-size:10px;color:var(--muted);display:block;margin-top:5px}
+.bottomgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.activity{display:grid;gap:0}
+.activity-item{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid #253149}
+.activity-item:last-child{border-bottom:0}
+.activity-icon{width:34px;height:34px;border-radius:11px;background:#18243a;display:grid;place-items:center}
+.activity-text{flex:1;min-width:0}
+.activity-text strong{display:block;font-size:12px}
+.activity-text small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.activity-time{color:#8292ad;font-size:10px;white-space:nowrap}
+.progress{height:6px;background:#253149;border-radius:9px;overflow:hidden;margin:11px 0}
+.progress span{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.goal{padding:13px 0;border-bottom:1px solid #253149}
+.goal:last-child{border-bottom:0}
+.goalrow{display:flex;justify-content:space-between;gap:8px;font-size:12px}
+.goalrow span:last-child{color:var(--muted);font-size:11px}
+.footer{color:#687791;font-size:10px;text-align:center;margin-top:28px}
+.page{display:none}
+.page.active{display:block}
+.simplebox{padding:24px;border:1px solid var(--line);border-radius:17px;background:var(--panel)}
+.simplebox h2{margin-top:0}
+.simplebox p{color:var(--muted);line-height:1.8;font-size:13px}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.main{padding:22px}.sidebar{width:225px}}
+@media(max-width:780px){
+ .app{display:block}
+ .sidebar{position:fixed;z-index:20;top:0;bottom:0;left:0;width:265px;transform:translateX(-105%);transition:transform .22s;box-shadow:20px 0 60px #0008}
+ .sidebar.open{transform:translateX(0)}
+ .main{padding:17px 14px 35px}
+ .menu{display:block}
+ .topbar{align-items:flex-start}
+ .top-actions .secondary{display:none}
+ .hero{padding:22px 19px}
+ .layout,.bottomgrid{grid-template-columns:1fr}
+ .stats{gap:10px}
+ .card{padding:15px}
+ .statvalue{font-size:25px}
+ .chart{gap:6px}
+}
+@media(max-width:380px){.stats{grid-template-columns:1fr 1fr}.top-actions{gap:5px}.avatar{width:33px;height:33px}.quickgrid{gap:7px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="logo">N</div>
+    <div><strong>BRANDNOVA</strong><small>BRAND OPERATING SYSTEM</small></div>
+  </div>
+  <div class="section-label">WORKSPACE</div>
+  <nav class="nav" id="nav">
+    <button class="active" data-page="overview"><span class="ico">◈</span>Overview</button>
+    <button data-page="identity"><span class="ico">✳</span>Brand Identity</button>
+    <button data-page="products"><span class="ico">▦</span>Products & Inventory</button>
+    <button data-page="orders"><span class="ico">↗</span>Orders & Sales</button>
+    <button data-page="customers"><span class="ico">♙</span>Customers & CRM</button>
+    <button data-page="finance"><span class="ico">₹</span>Finance & Budgets</button>
+    <button data-page="marketing"><span class="ico">✧</span>Marketing Studio</button>
+    <button data-page="tasks"><span class="ico">☷</span>Tasks & Team</button>
+    <button data-page="analytics"><span class="ico">⌁</span>Analytics</button>
+    <button data-page="vault"><span class="ico">▣</span>Brand Vault</button>
+  </nav>
+  <div class="section-label">SYSTEM</div>
+  <nav class="nav">
+    <button data-page="automation"><span class="ico">⚙</span>Automation Lab</button>
+    <button data-page="settings"><span class="ico">◉</span>Settings & Privacy</button>
+  </nav>
+  <div class="probox">
+    <div class="eyebrow">✦ BRANDNOVA PRO</div>
+    <p>Unlock a more powerful brand management workflow as paid features become available.</p>
+    <button data-page="pro">Explore Pro ↗</button>
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div class="top-left">
+    <button class="menu" id="menu">☰</button>
+    <div><div class="eyebrow">YOUR BRAND COMMAND CENTER</div><h1 id="pageTitle">Overview</h1><div class="subtitle" id="pageSubtitle">Everything important, in one place.</div></div>
+  </div>
+  <div class="top-actions">
+    <button class="secondary" id="export">↧ Export summary</button>
+    <button class="iconbtn" id="notify" aria-label="Notifications">♧</button>
+    <div class="avatar" id="avatar">B</div>
+  </div>
+</header>
+
+<section class="page active" id="page-overview">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="pill"><span class="dot"></span> YOUR BRAND WORKSPACE</div>
+      <h2>Build a brand that<br><span>means business.</span></h2>
+      <p>Your central command center for brand strategy, products, customers, marketing and performance. Your workspace. Your decisions. Your brand.</p>
+      <div class="actions">
+        <button class="primary" data-page="identity">✦ Set up brand identity</button>
+        <button class="secondary" data-page="products">＋ Add a product</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="stat-top">Total revenue <span class="stat-icon">₹</span></div><div class="statvalue" id="revenue">₹0</div><div class="muted">From recorded sales</div></div>
+    <div class="card"><div class="stat-top">Orders recorded <span class="stat-icon">↗</span></div><div class="statvalue" id="ordersCount">0</div><div class="change">Track your order pipeline</div></div>
+    <div class="card"><div class="stat-top">Products <span class="stat-icon">▦</span></div><div class="statvalue" id="productCount">0</div><div class="muted">In your product catalogue</div></div>
+    <div class="card"><div class="stat-top">Customers <span class="stat-icon">♙</span></div><div class="statvalue" id="customerCount">0</div><div class="muted">Saved in your CRM</div></div>
+  </div>
+
+  <div class="layout">
+    <div class="card">
+      <div class="cardhead"><div><h3>Business overview</h3><p>Recorded order values by month</p></div><span class="badge">LOCAL DATA</span></div>
+      <div class="chart" id="chart"></div>
+      <div class="muted" style="margin-top:13px">This chart uses the order records stored in this browser. It is not a live bank or store connection.</div>
+    </div>
+    <div class="card">
+      <div class="cardhead"><div><h3>Quick actions</h3><p>Jump straight into your workflow</p></div></div>
+      <div class="quickgrid">
+        <button class="quick" data-page="products"><div class="qicon">▦</div><strong>Product catalogue</strong><small>Manage your products</small></button>
+        <button class="quick" data-page="orders"><div class="qicon">↗</div><strong>Record a sale</strong><small>Track orders & revenue</small></button>
+        <button class="quick" data-page="marketing"><div class="qicon">✧</div><strong>Marketing studio</strong><small>Plan campaigns</small></button>
+        <button class="quick" data-page="tasks"><div class="qicon">☷</div><strong>Manage tasks</strong><small>Keep work moving</small></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottomgrid">
+    <div class="card"><div class="cardhead"><div><h3>Recent activity</h3><p>Updates from this session</p></div></div><div id="activity" class="activity"><div class="muted">Your activity will appear here as you use the workspace.</div></div></div>
+    <div class="card"><div class="cardhead"><div><h3>Brand health checklist</h3><p>Build a stronger foundation</p></div><span class="badge" id="healthBadge">0% complete</span></div><div id="goals"></div><div class="progress"><span id="healthProgress" style="width:0%"></span></div><div class="muted">Complete your brand profile and add real business records to make this workspace more useful.</div></div>
+  </div>
+</section>
+
+<section class="page" id="page-identity"><div class="simplebox"><h2>✳ Brand Identity</h2><p>Define the foundation of your brand. Your brand name, audience, mission, personality, tone of voice and visual identity belong here.</p><form id="identityForm"><label class="muted">Brand name</label><input class="field" name="name" placeholder="Your brand name" style="display:block;width:100%;padding:13px;margin:8px 0 15px;color:white"><label class="muted">Brand tagline</label><input class="field" name="tagline" placeholder="Your promise in a sentence" style="display:block;width:100%;padding:13px;margin:8px 0 15px;color:white"><label class="muted">Mission and audience</label><textarea class="field" name="mission" placeholder="Who do you serve, and what problem do you solve?" style="display:block;width:100%;min-height:110px;padding:13px;margin:8px 0 15px;color:white"></textarea><button class="primary">Save brand identity</button></form><p id="identitySaved"></p></div></section>
+
+<section class="page" id="page-products"><div class="simplebox"><h2>▦ Products & Inventory</h2><p>Maintain a local product catalogue and keep your product information organised.</p><form id="productForm"><input class="field" name="name" required placeholder="Product name" style="width:100%;padding:12px;margin:7px 0;color:white"><input class="field" name="price" type="number" min="0" required placeholder="Price in ₹" style="width:100%;padding:12px;margin:7px 0;color:white"><input class="field" name="stock" type="number" min="0" required placeholder="Stock quantity" style="width:100%;padding:12px;margin:7px 0;color:white"><button class="primary" style="margin-top:9px">＋ Save product</button></form><div id="productList" style="margin-top:20px"></div></div></section>
+
+<section class="page" id="page-orders"><div class="simplebox"><h2>↗ Orders & Sales</h2><p>Record orders manually. This does not connect to a live online store or payment provider.</p><form id="orderForm"><input class="field" name="name" required placeholder="Order or customer reference" style="width:100%;padding:12px;margin:7px 0;color:white"><input class="field" name="amount" type="number" min="0" required placeholder="Order value in ₹" style="width:100%;padding:12px;margin:7px 0;color:white"><button class="primary" style="margin-top:9px">＋ Record order</button></form><div id="orderList" style="margin-top:20px"></div></div></section>
+
+<section class="page" id="page-customers"><div class="simplebox"><h2>♙ Customers & CRM</h2><p>Keep a simple local record of your customer relationships. Store only information you have permission to retain.</p><form id="customerForm"><input class="field" name="name" required placeholder="Customer name" style="width:100%;padding:12px;margin:7px 0;color:white"><input class="field" name="contact" placeholder="Contact or reference (optional)" style="width:100%;padding:12px;margin:7px 0;color:white"><button class="primary" style="margin-top:9px">＋ Save customer</button></form><div id="customerList" style="margin-top:20px"></div></div></section>
+
+<section class="page" id="page-finance"><div class="simplebox"><h2>₹ Finance & Budgets</h2><p>Record basic income and expenses for your own reference. These are not bank-connected accounts or formal financial statements.</p><form id="financeForm"><input class="field" name="label" required placeholder="Transaction description" style="width:100%;padding:12px;margin:7px 0;color:white"><select class="field" name="type" style="width:100%;padding:12px;margin:7px 0;color:white"><option value="income">Income</option><option value="expense">Expense</option></select><input class="field" name="amount" type="number" min="0" required placeholder="Amount in ₹" style="width:100%;padding:12px;margin:7px 0;color:white"><button class="primary" style="margin-top:9px">＋ Save transaction</button></form><div id="financeList" style="margin-top:20px"></div></div></section>
+
+<section class="page" id="page-marketing"><div class="simplebox"><h2>✧ Marketing Studio</h2><p>Plan campaigns, organise promotional ideas and keep track of what you intend to publish. Publishing is not connected to social platforms.</p><form id="campaignForm"><input class="field" name="name" required placeholder="Campaign name" style="width:100%;padding:12px;margin:7px 0;color:white"><input class="field" name="channel" placeholder="Channel (e.g. Instagram, email)" style="width:100%;padding:12px;margin:7px 0;color:white"><button class="primary" style="margin-top:9px">＋ Save campaign</button></form><div id="campaignList" style="margin-top:20px"></div></div></section>
+
+<section class="page" id="page-tasks"><div class="simplebox"><h2>☷ Tasks & Team</h2><p>Manage your own work queue. Shared team accounts and real-time collaboration require a backend.</p><form id="taskForm"><input class="field" name="name" required placeholder="Task to complete" style="width:100%;padding:12px;margin:7px 0;color:white"><button class="primary" style="margin-top:9px">＋ Add task</button></form><div id="taskList" style="margin-top:20px"></div></div></section>
+
+<section class="page" id="page-analytics"><div class="simplebox"><h2>⌁ Analytics</h2><p>Review metrics calculated from your manually recorded local data.</p><div id="analyticsContent"></div></div></section>
+
+<section class="page" id="page-vault"><div class="simplebox"><h2>▣ Brand Vault</h2><p>Keep notes about brand assets and important resources. This simple version stores text records locally, not uploaded files in the cloud.</p><form id="vaultForm"><input class="field" name="name" required placeholder="Asset or resource name" style="width:100%;padding:12px;margin:7px 0;color:white"><textarea class="field" name="note" placeholder="Notes or local reference" style="width:100%;padding:12px;margin:7px 0;color:white"></textarea><button class="primary" style="margin-top:9px">＋ Save resource</button></form><div id="vaultList" style="margin-top:20px"></div></div></section>
+
+<section class="page" id="page-automation"><div class="simplebox"><h2>⚙ Automation Lab</h2><p>Explore future workflow automation ideas. This offline demo does not run background jobs, send messages or connect external services.</p><div class="goal"><strong>Low-stock reminder</strong><p>Review products with stock levels you consider low.</p></div><div class="goal"><strong>Marketing calendar</strong><p>Plan campaign timing and publishing responsibilities.</p></div><div class="goal"><strong>Order follow-up</strong><p>Maintain a manual checklist for customer follow-ups.</p></div></div></section>
+
+<section class="page" id="page-settings"><div class="simplebox"><h2>◉ Settings & Privacy</h2><p>BRANDNOVA OS saves data in this browser on this device. Clearing browser data may remove it. Export a backup before clearing anything.</p><button class="primary" id="backup">Export JSON backup</button> <button class="secondary" id="restoreBtn">Restore backup</button><input type="file" id="restoreFile" accept=".json,application/json" hidden><hr style="border-color:var(--line);margin:24px 0"><p>Reset removes the locally stored BRANDNOVA OS records for this browser.</p><button class="secondary" id="reset">Reset all local data</button><p id="settingsStatus"></p></div></section>
+
+<section class="page" id="page-pro"><div class="simplebox"><div class="eyebrow">✦ BRANDNOVA PRO</div><h2>More power for your brand.</h2><p>Planned premium capabilities include advanced analytics, multi-brand workspaces, deeper campaign planning, team collaboration, and workflow integrations.</p><p><strong>Availability:</strong> These are roadmap concepts, not active paid services. No payment will be taken here.</p></div></section>
+
+<div class="footer">BRANDNOVA OS · LOCAL WORKSPACE · YOUR DATA STAYS IN THIS BROWSER</div>
+</main>
+</div>
+
+<script>
+const KEY="brandnova_copy_ui_v1";
+const blank=()=>({identity:{name:"",tagline:"",mission:""},products:[],orders:[],customers:[],finance:[],campaigns:[],tasks:[],vault:[],activity:[]});
+let data;
+try{data=JSON.parse(localStorage.getItem(KEY))||blank()}catch{data=blank()}
+function persist(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function money(n){return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function log(message,icon="✦"){data.activity.unshift({message,icon,time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})});data.activity=data.activity.slice(0,8)}
+const titles={overview:["Overview","Everything important, in one place."],identity:["Brand Identity","Define what makes your brand different."],products:["Products & Inventory","Your product catalogue and stock records."],orders:["Orders & Sales","Record sales and track order value."],customers:["Customers & CRM","Keep customer relationships organised."],finance:["Finance & Budgets","Review manually recorded transactions."],marketing:["Marketing Studio","Organise campaign ideas and channels."],tasks:["Tasks & Team","Turn priorities into completed work."],analytics:["Analytics","Explore metrics from your local records."],vault:["Brand Vault","Keep your brand references organised."],automation:["Automation Lab","Plan future workflow improvements."],settings:["Settings & Privacy","Control your local data and backups."],pro:["BRANDNOVA PRO","Explore planned premium capabilities."]};
+function go(page){if(!titles[page])return;document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById("page-"+page)?.classList.add("active");document.querySelectorAll("[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));document.getElementById("pageTitle").textContent=titles[page][0];document.getElementById("pageSubtitle").textContent=titles[page][1];document.getElementById("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"})}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-page]");if(b)go(b.dataset.page)});
+document.getElementById("menu").onclick=()=>document.getElementById("sidebar").classList.toggle("open");
+document.getElementById("notify").onclick=()=>alert(data.activity.length?data.activity.map(a=>a.message).join("\n"):"No activity yet. Your updates will appear here.");
+function addForm(id,key,fields,label,icon){document.getElementById(id).addEventListener("submit",e=>{e.preventDefault();const f=new FormData(e.target);const item={id:Date.now(),date:new Date().toISOString(),...Object.fromEntries(fields.map(k=>[k,f.get(k)]))};data[key].unshift(item);log(label+" added",icon);e.target.reset();persist()})}
+addForm("productForm","products",["name","price","stock"],"Product","▦");
+addForm("orderForm","orders",["name","amount"],"Order","↗");
+addForm("customerForm","customers",["name","contact"],"Customer","♙");
+addForm("financeForm","finance",["label","type","amount"],"Transaction","₹");
+addForm("campaignForm","campaigns",["name","channel"],"Campaign","✧");
+addForm("taskForm","tasks",["name"],"Task","☷");
+addForm("vaultForm","vault",["name","note"],"Vault resource","▣");
+document.getElementById("identityForm").addEventListener("submit",e=>{e.preventDefault();const f=new FormData(e.target);data.identity=Object.fromEntries(["name","tagline","mission"].map(k=>[k,f.get(k)]));log("Brand identity updated","✳");document.getElementById("identitySaved").textContent="Brand identity saved on this device.";persist()});
+function list(key,container,fields){const el=document.getElementById(container);const items=data[key];el.innerHTML=items.length?items.map(i=>`<div class="activity-item"><div class="activity-icon">${fields.icon||"•"}</div><div class="activity-text"><strong>${esc(i[fields.title]||"Untitled")}</strong><small>${fields.sub?esc(i[fields.sub]||""):"Saved locally"} ${fields.price? " · "+money(i[fields.price]):""}</small></div><button class="secondary" data-delete="${key}" data-id="${i.id}" style="padding:7px 9px">Delete</button></div>`).join(""):'<p class="muted">No records yet. Add your first item above.</p>'}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-delete]");if(!b)return;const k=b.dataset.delete,id=Number(b.dataset.id);data[k]=data[k].filter(x=>x.id!==id);log("A "+k+" record was deleted","−");persist()});
+function render(){
+ document.getElementById("revenue").textContent=money(data.orders.reduce((s,o)=>s+Number(o.amount||0),0));
+ document.getElementById("ordersCount").textContent=data.orders.length;
+ document.getElementById("productCount").textContent=data.products.length;
+ document.getElementById("customerCount").textContent=data.customers.length;
+ document.getElementById("avatar").textContent=(data.identity.name||data.identity.name||data.identity.name||"B").trim().charAt(0).toUpperCase()||"B";
+ document.getElementById("activity").innerHTML=data.activity.length?data.activity.map(a=>`<div class="activity-item"><div class="activity-icon">${esc(a.icon)}</div><div class="activity-text"><strong>${esc(a.message)}</strong><small>Saved on this device</small></div><span class="activity-time">${esc(a.time)}</span></div>`).join(""):'<div class="muted">Your activity will appear here as you use the workspace.</div>';
+ const goals=[["Brand identity",!!data.identity.name],["First product",data.products.length>0],["First order",data.orders.length>0],["First customer",data.customers.length>0],["Marketing campaign",data.campaigns.length>0]];
+ const done=goals.filter(g=>g[1]).length,pct=Math.round(done/goals.length*100);
+ document.getElementById("goals").innerHTML=goals.map(g=>`<div class="goal"><div class="goalrow"><span>${g[1]?"✓":"○"} ${g[0]}</span><span>${g[1]?"Complete":"To do"}</span></div></div>`).join("");
+ document.getElementById("healthBadge").textContent=pct+"% complete";document.getElementById("healthProgress").style.width=pct+"%";
+ list("products","productList",{title:"name",sub:"stock",price:"price",icon:"▦"});
+ list("orders","orderList",{title:"name",price:"amount",icon:"↗"});
+ list("customers","customerList",{title:"name",sub:"contact",icon:"♙"});
+ list("finance","financeList",{title:"label",sub:"type",price:"amount",icon:"₹"});
+ list("campaigns","campaignList",{title:"name",sub:"channel",icon:"✧"});
+ list("tasks","taskList",{title:"name",icon:"☷"});
+ list("vault","vaultList",{title:"name",sub:"note",icon:"▣"});
+ const total=data.orders.reduce((s,o)=>s+Number(o.amount||0),0);
+ document.getElementById("analyticsContent").innerHTML=`<div class="stats"><div class="card"><div class="muted">Recorded revenue</div><div class="statvalue">${money(total)}</div></div><div class="card"><div class="muted">Average order value</div><div class="statvalue">${money(data.orders.length?total/data.orders.length:0)}</div></div><div class="card"><div class="muted">Expenses recorded</div><div class="statvalue">${money(data.finance.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount||0),0))}</div></div><div class="card"><div class="muted">Open tasks</div><div class="statvalue">${data.tasks.length}</div></div></div>`;
+ const vals=Array(6).fill(0);data.orders.forEach(o=>{const d=new Date(o.date);const age=(new Date().getFullYear()-d.getFullYear())*12+new Date().getMonth()-d.getMonth();if(age>=0&&age<6)vals[5-age]+=Number(o.amount||0)});
+ const max=Math.max(...vals,1),months=["5 mo","4 mo","3 mo","2 mo","Last mo","This mo"];
+ document.getElementById("chart").innerHTML=vals.map((v,i)=>`<div class="barcol"><div class="bar" title="${esc(money(v))}" style="height:${Math.max(4,v/max*100)}%"></div><div class="month">${months[i]}</div></div>`).join("");
+ const idf=document.getElementById("identityForm");["name","tagline","mission"].forEach(k=>{if(document.activeElement!==idf.elements[k])idf.elements[k].value=data.identity[k]||""});
+}
+document.getElementById("backup").onclick=()=>download("brandnova-backup.json",JSON.stringify(data,null,2),"application/json");
+document.getElementById("export").onclick=()=>download("brandnova-summary.csv",["Category,Count","Products,"+data.products.length,"Orders,"+data.orders.length,"Customers,"+data.customers.length,"Campaigns,"+data.campaigns.length,"Tasks,"+data.tasks.length,"Revenue,"+data.orders.reduce((s,o)=>s+Number(o.amount||0),0)].join("\n"),"text/csv");
+function download(name,content,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
+document.getElementById("restoreBtn").onclick=()=>document.getElementById("restoreFile").click();
+document.getElementById("restoreFile").onchange=async e=>{try{const x=JSON.parse(await e.target.files[0].text());if(!x||!Array.isArray(x.products)||!Array.isArray(x.orders))throw Error();data={...blank(),...x};persist();alert("Backup restored.")}catch{alert("That backup file could not be read.")}e.target.value=""};
+document.getElementById("reset").onclick=()=>{if(confirm("Permanently reset all BRANDNOVA OS records saved in this browser? Export a backup first if needed.")){data=blank();persist();document.getElementById("settingsStatus").textContent="Local records reset."}};
+render();
+</script>
+</body>
+</html>
